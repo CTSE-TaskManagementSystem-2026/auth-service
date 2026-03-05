@@ -22,7 +22,8 @@ const {
   getAllUsers,
   updateUserRole,
   deleteUser,
-  updatePassword
+  updatePassword,
+  getUserProfile
 } = require("../controllers/authController");
 
 const { protect, authorize } = require("../middleware/authMiddleware");
@@ -32,6 +33,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 
 // Protected
+router.get("/profile", protect, getUserProfile);
 router.post("/logout", protect, logoutUser);
 router.put("/update-password", protect, updatePassword);
 

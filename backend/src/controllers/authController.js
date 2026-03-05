@@ -96,7 +96,10 @@ exports.loginUser = async (req, res) => {
 
     res.json({
       message: "Login successful",
-      token: generateToken(user)
+      token: generateToken(user),
+      role: user.role,
+      name: user.name,
+      email: user.email
     });
 
   } catch (err) {
@@ -149,6 +152,19 @@ exports.deleteUser = async (req, res) => {
     return res.status(404).json({ message: "User not found" });
 
   res.json({ message: "User deleted successfully" });
+};
+
+// ================= GET USER PROFILE =================
+exports.getUserProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    if (!user)
+      return res.status(404).json({ message: "User not found" });
+
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };
 
 // ================= UPDATE PASSWORD =================
