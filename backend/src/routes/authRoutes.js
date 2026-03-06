@@ -29,6 +29,9 @@ const {
 const { protect, authorize } = require("../middleware/authMiddleware");
 
 // Public
+router.get("/health", (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
